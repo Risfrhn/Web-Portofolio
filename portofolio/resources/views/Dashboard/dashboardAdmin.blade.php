@@ -6,7 +6,7 @@
                 <h5>Selamat datang! saya</h5>
                 <h1>Muhammad Risky Farhan</h1>
                 <p class="py-2 opacity-50" style="line-height: 1.8;">Saya seorang mahasiswa jurusan rekayasa perangkat lunak <br>Ayo telusuri pengalaman proyek dan pencapaian saya</p>
-                <button type="button" class="btn btn-outline-primary border-2">Download CV</button>
+                <button type="button" class="btn btn-outline-primary border-2" data-bs-toggle="modal" data-bs-target="#uploadModal">Upload CV</button>
             </div>
             <div class="col-12 col-md-6 d-flex justify-content-center" data-aos="zoom-in">
                 <img src="{{ asset('Gambar/gambarorang.png') }}"  height="500px" alt="">
@@ -117,13 +117,14 @@
     </div>
 
     <!-- tentang saya -->
-    <div class="container" id="halaman-tentangSaya-admin">
+    <div class="container" id="halaman-tentangSaya">
         <div class="row py-5">
-            <p class="pb-3" style="font-size:25px" data-aos="fade-right">Tentang saya</p>
-            <div class="col-4 d-flex align-items-center justify-content-center" data-aos="zoom-in">
-                <img class="rounded" src="{{ asset('Gambar/saya_bgdanattribut.JPG') }}" height="200px" alt="">
+            <p class="pb-3 align-self-center text-center text-lg-start" style="font-size:25px" data-aos="fade-right">Tentang saya</p>
+            <div class="col-12 col-md-4 py-5 py-md-0 d-flex justify-content-center" data-aos="zoom-in">
+                <img class="rounded img-fluid img-md-200" src="{{ asset('Gambar/saya_bgdanattribut.jpg') }}" alt="">
             </div>
-            <div class="col-8" data-aos="fade-up">
+
+            <div class="col-12 col-md-8 align-self-center text-center text-md-start" data-aos="fade-up">
                 <p style="font-size:12px; text-align: justify;">Hai, Perkenalkan nama saya <span style="font-size: 14px; font-weight: bold;">Muhammad Risky Farhan.</span> saya seorang mahasiswa yang masih menempuh pendidikan di <span style="font-size: 14px; font-weight: bold; color:red">Universitas Telkom </span>dengan jurusan <span style="font-size: 14px; font-weight: bold; color:orange">Rekayasa Perangkat Lunak.</span> saya memiliki ketertarikan pada sebuah pengembangan <span style="font-size: 14px; font-weight: bold; color:blue">website</span> terutama pada bagian User Interface. Selain itu, saya juga memiliki pengalaman dalam mengoperasikan <span style="font-size: 14px; font-weight: bold;"> microsoft office </span> seperti Powerpoint, Excel, dan Word. saya memiliki pengalaman dalam menggunakan beberapa tools seperti.</p>
                 <img src="{{ asset('Gambar/Bootstrap_logo.png') }}" class="img-fluid pe-4" style="max-width: 100px;" alt="Tidak terbaca">
                 <img src="{{ asset('Gambar/Tailwind_CSS_logo.png') }}" class="img-fluid pe-4" style="max-width: 100px;" alt="Tidak terbaca">
@@ -151,15 +152,15 @@
                     <form action="{{ route('tambahKeahlian') }}" method="POST">
                         @csrf
                         <div class="mb-3">
-                            <label for="nama_keahlian" class="form-label">Nama Keahlian</label>
+                            <label for="nama_keahlian" class="form-label">Skill apa nih yang baru</label>
                             <input type="text" class="form-control" id="nama_keahlian" name="nama_keahlian" required>
                         </div>
                         <div class="mb-3">
-                            <label for="deskripsi" class="form-label">Deskripsi</label>
+                            <label for="deskripsi" class="form-label">Coba jelasin dikit dong</label>
                             <textarea class="form-control" id="deskripsi" name="deskripsi" required></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="icon" class="form-label">Icon</label>
+                            <label for="icon" class="form-label">Skillnya bentuk apa sih?</label>
                             <input type="text" class="form-control" id="icon" name="icon" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Tambah Keahlian</button>
@@ -175,7 +176,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="tambahProjekModalLabel">Tambah Keahlian</h5>
+                    <h5 class="modal-title" id="tambahProjekModalLabel">Tambah Projek</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -183,7 +184,7 @@
                         @csrf
                         <!-- Gambar Flyer -->
                         <div class="mb-3">
-                            <label for="gambar_flyer" class="form-label">Gambar Flyer</label>
+                            <label for="gambar_flyer" class="form-label">Gambar Spanduknya</label>
                             <input type="file" class="form-control" id="gambar_flyer" name="gambar_flyer" required>
                             @error('gambar_flyer')
                                 <div class="text-danger">{{ $message }}</div>
@@ -192,7 +193,7 @@
 
                         <!-- Title 1 (Perusahaan) -->
                         <div class="mb-3">
-                            <label for="title_1" class="form-label">Perusahaan</label>
+                            <label for="title_1" class="form-label">Perusahaan mana yang buat projek?</label>
                             <input type="text" class="form-control" id="title_1" name="title_1" required>
                             @error('title_1')
                                 <div class="text-danger">{{ $message }}</div>
@@ -201,7 +202,7 @@
 
                         <!-- Title 2 (Nama Web) -->
                         <div class="mb-3">
-                            <label for="title_2" class="form-label">Nama Web</label>
+                            <label for="title_2" class="form-label">Dikasi nama apa tuh projeknya?</label>
                             <input type="text" class="form-control" id="title_2" name="title_2" required>
                             @error('title_2')
                                 <div class="text-danger">{{ $message }}</div>
@@ -210,7 +211,7 @@
 
                         <!-- Desk 1 -->
                         <div class="mb-3">
-                            <label for="desk_1" class="form-label">Deskripsi 1</label>
+                            <label for="desk_1" class="form-label">Jelasin singkat dong tentang projeknya</label>
                             <textarea class="form-control" id="desk_1" name="desk_1" rows="3" required></textarea>
                             @error('desk_1')
                                 <div class="text-danger">{{ $message }}</div>
@@ -219,7 +220,7 @@
 
                         <!-- Gambar 1 -->
                         <div class="mb-3">
-                            <label for="gambar_1" class="form-label">Gambar 1</label>
+                            <label for="gambar_1" class="form-label">Coba tambahin gambar produknya disini</label>
                             <input type="file" class="form-control" id="gambar_1" name="gambar_1" required>
                             @error('gambar_1')
                                 <div class="text-danger">{{ $message }}</div>
@@ -228,7 +229,7 @@
 
                         <!-- Desk 2 -->
                         <div class="mb-3">
-                            <label for="desk_2" class="form-label">Deskripsi 2</label>
+                            <label for="desk_2" class="form-label">Make tools apa aja sih?</label>
                             <textarea class="form-control" id="desk_2" name="desk_2" rows="3" required></textarea>
                             @error('desk_2')
                                 <div class="text-danger">{{ $message }}</div>
@@ -237,7 +238,7 @@
 
                         <!-- Desk 3 -->
                         <div class="mb-3">
-                            <label for="desk_3" class="form-label">Deskripsi 3</label>
+                            <label for="desk_3" class="form-label">Kebagian ngerjain bagian apa nih?</label>
                             <textarea class="form-control" id="desk_3" name="desk_3" rows="3" required></textarea>
                             @error('desk_3')
                                 <div class="text-danger">{{ $message }}</div>
@@ -280,6 +281,32 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Upload CV -->
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadModalLabel">Upload File</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('files.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="file" class="form-label">Choose File</label>
+                            <input type="file" class="form-control" id="file" name="file" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Modal Konfirmasi Hapus -->
     <div class="modal fade" id="hapusModal" tabindex="-1" aria-labelledby="hapusModalLabel" aria-hidden="true">

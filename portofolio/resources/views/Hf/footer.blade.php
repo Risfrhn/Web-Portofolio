@@ -5,9 +5,15 @@
                 <i class="bi bi-c-circle" style="color:blue"> 2025 - Muhammad Risky Farhan</i>
             </div>
             <div class="col-2 d-flex justify-content-end">
-                <i class="bi bi-github me-3" style="color:blue; font-size:20px;"></i>
-                <i class="bi bi-instagram me-3" style="color:blue; font-size:20px;"></i>
-                <i class="bi bi-envelope-fill me-3" style="color:blue; font-size:20px;"></i>
+                <a href="https://github.com/Risfrhn" target="_blank">
+                    <i class="bi bi-github me-3" style="color:blue; font-size:20px;"></i>
+                </a>
+                <a href="https://www.instagram.com/risfrhn_" target="_blank">
+                    <i class="bi bi-instagram me-3" style="color:blue; font-size:20px;"></i>
+                </a>
+                <a href="mailto:rskyfrhn801@gmail.com" target="_blank">
+                    <i class="bi bi-envelope-fill me-3" style="color:blue; font-size:20px;"></i>
+                </a>
             </div>
         </div>
     </div>

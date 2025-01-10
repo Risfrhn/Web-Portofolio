@@ -12,6 +12,9 @@
             <h5>{{ $projek->title_1 }}</h5>
             <h1>{{ $projek->title_2 }}</h1>
             <p class="py-2 opacity-50" style="line-height: 1.8;">{{ $projek->desk_1 }}</p>
+            @if(!empty($projek->link_projek))
+                <a type="button" class="btn btn-outline-primary" href="{{ $projek->link_projek }}">Ingin Mengunjungi?</a>
+            @endif
         </div>
         <div class="col-12 col-md-6 py-5 d-flex justify-content-center" data-aos="zoom-in">
             <img src="{{ asset($projek->gambar_1) }}"  style="max-width: 100%; max-height: 500px; width: auto; height: auto;" alt="">

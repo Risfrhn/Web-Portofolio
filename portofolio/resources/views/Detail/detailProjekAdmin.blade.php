@@ -132,6 +132,9 @@
 
                             <input type="radio" class="btn-check" name="edit_choice" id="add_icon" value="icon" autocomplete="off">
                             <label class="btn btn-outline-primary" for="add_icon">icon</label>
+
+                            <input type="radio" class="btn-check" name="edit_choice" id="add_projek" value="icon" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="add_projek">Projek</label>
                         </div>
                     </div>
 
@@ -171,7 +174,7 @@
 
                     <!-- Form tambah Images -->
                     <div id="addCarouselContent" style="display:none">
-                        @foreach(range(1, 5) as $index)
+                        @foreach(range(1, 9) as $index)
                             <div class="mb-3">
                                 <label for="gambarProjek_{{ $index }}" class="form-label">Gambar Projek {{ $index }}</label>
                                 
@@ -190,7 +193,7 @@
 
                     <!-- Form tambah Icon -->
                     <div id="addIconContent" style="display:none">
-                        @foreach(range(1, 5) as $index)
+                        @foreach(range(1, 9) as $index)
                             <div class="mb-3">
                                 <label for="gambarIcon_{{ $index }}" class="form-label">Gambar Icon {{ $index }}</label>
 
@@ -203,6 +206,14 @@
                                 <input type="file" class="form-control" id="gambarIcon_{{ $index }}" name="gambarIcon_{{ $index }}">
                             </div>
                         @endforeach
+                    </div>
+
+                    <!-- Form link projek -->
+                    <div id="addProjekContent" style="display:none">
+                        <div class="mb-3">
+                            <label for="link_projek" class="form-label">Kalo gaada link web nya make github aja</label>
+                            <input type="text" class="form-control" id="link_projek" name="link_projek" value="">
+                        </div>
                     </div>
 
                     <!-- Tombol Submit -->
@@ -225,18 +236,27 @@
     document.getElementById('editProjectContent').style.display = 'block';
     document.getElementById('addCarouselContent').style.display = 'none';
     document.getElementById('addIconContent').style.display = 'none';
+    document.getElementById('addProjekContent').style.display = 'none';
     });
 
     document.getElementById('add_carousel').addEventListener('change', function() {
         document.getElementById('editProjectContent').style.display = 'none';
         document.getElementById('addCarouselContent').style.display = 'block';
         document.getElementById('addIconContent').style.display = 'none';
+        document.getElementById('addProjekContent').style.display = 'none';
     });
 
     document.getElementById('add_icon').addEventListener('change', function() {
         document.getElementById('editProjectContent').style.display = 'none';
         document.getElementById('addCarouselContent').style.display = 'none';
         document.getElementById('addIconContent').style.display = 'block';
+        document.getElementById('addProjekContent').style.display = 'none';
+    });
+    document.getElementById('add_projek').addEventListener('change', function() {
+        document.getElementById('editProjectContent').style.display = 'none';
+        document.getElementById('addCarouselContent').style.display = 'none';
+        document.getElementById('addIconContent').style.display = 'none';
+        document.getElementById('addProjekContent').style.display = 'block';
     });
 
 

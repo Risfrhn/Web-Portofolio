@@ -9,6 +9,7 @@ use App\Models\keahlianModel as Keahlian;
 use App\Models\projekModel as projek;
 use App\Models\gambarProjekModel as gambarProjek;
 use App\Models\sertifikatModel as sertifikat;
+use App\Models\fileModel as file;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -20,11 +21,13 @@ class ProjectController extends Controller
         $sertifikat = Sertifikat::all();
         $keahlian = Keahlian::all();
         $projek = Projek::all();
+        $files = file::all();
 
         return view('Dashboard.dashboardAdmin', [
             'keahlian' => $keahlian,
             'projek' => $projek,
             'sertifikat' => $sertifikat,
+            'files' => $files,
         ]);
     }
     public function showDashboardPengguna()
@@ -32,11 +35,13 @@ class ProjectController extends Controller
         $sertifikat = Sertifikat::all();
         $keahlian = Keahlian::all();
         $projek = Projek::all();
+        $files = file::all();
 
         return view('Dashboard.dashboard', [
             'keahlian' => $keahlian,
             'projek' => $projek,
             'sertifikat' => $sertifikat,
+            'files' => $files,
         ]);
     }
 
@@ -140,11 +145,11 @@ class ProjectController extends Controller
             $gambar_1 = round(microtime(true) * 1000) . '-' . str_replace(' ', '-', $request->file('gambar_1')->getClientOriginalName());
 
             // Pindahkan file gambar ke folder 'public/images'
-            $path = $request->file('gambar_1')->move(public_path('images'), $gambar_1);
+            $path = $request->file('gambar_1')->move(public_path('images/sertifikat/'), $gambar_1);
 
             // Simpan data gambar ke database
             $sertifikat = new sertifikat();
-            $sertifikat->gambar_1 = 'images/' . $gambar_1; // Simpan path relatif ke database
+            $sertifikat->gambar_1 = 'images/sertifikat/' . $gambar_1; // Simpan path relatif ke database
             $sertifikat->title = $request->title;
             $sertifikat->description = $request->description;
             $sertifikat->save(); // Simpan data ke database
@@ -234,33 +239,44 @@ class ProjectController extends Controller
                 'gambar_1' => 'nullable|image',
                 'desk_2' => 'required|string',
                 'desk_3' => 'required|string',
+                'link_projek' => 'nullable|string',
+
                 'gambarIcon_1' => 'nullable|image',
                 'gambarIcon_2' => 'nullable|image',
                 'gambarIcon_3' => 'nullable|image',
                 'gambarIcon_4' => 'nullable|image',
                 'gambarIcon_5' => 'nullable|image',
+                'gambarIcon_6' => 'nullable|image',
+                'gambarIcon_7' => 'nullable|image',
+                'gambarIcon_8' => 'nullable|image',
+                'gambarIcon_9' => 'nullable|image',
+
                 'gambarProjek_1' => 'nullable|image',
                 'gambarProjek_2' => 'nullable|image',
                 'gambarProjek_3' => 'nullable|image',
                 'gambarProjek_4' => 'nullable|image',
                 'gambarProjek_5' => 'nullable|image',
+                'gambarProjek_6' => 'nullable|image',
+                'gambarProjek_7' => 'nullable|image',
+                'gambarProjek_8' => 'nullable|image',
+                'gambarProjek_9' => 'nullable|image',
             ]);
 
             // Ambil proyek yang akan diedit
             $detailProjek = projek::findOrFail($id);
 
-            // Fungsi untuk menghapus dan menyimpan gambar jika ada
+            // Fungsi untuk menghapus file lama dan menyimpan gambar baru
             $saveImage = function($fieldName, $imagePath) use ($request, $detailProjek) {
                 if ($request->hasFile($fieldName)) {
-                    \Log::info("Processing image: " . $fieldName); // Log untuk memastikan gambar diproses
+                    // Hapus gambar lama jika ada
+                    if ($detailProjek->{$imagePath} && file_exists(public_path($detailProjek->{$imagePath}))) {
+                        unlink(public_path($detailProjek->{$imagePath})); // Menghapus file lama
+                    }
 
                     // Proses gambar baru
                     $fileName = round(microtime(true) * 1000) . '-' . str_replace(' ', '-', $request->file($fieldName)->getClientOriginalName());
-                    \Log::info("Saving image as: " . $fileName); // Log nama file yang disimpan
                     $request->file($fieldName)->move(public_path('images'), $fileName);
-                    $detailProjek->{$imagePath} = 'images/' . $fileName;
-                } else {
-                    \Log::info("No file for: " . $fieldName); // Log jika tidak ada file untuk field ini
+                    $detailProjek->{$imagePath} = 'images/' . $fileName; // Simpan path gambar baru
                 }
             };
 
@@ -269,13 +285,13 @@ class ProjectController extends Controller
             $saveImage('gambar_1', 'gambar_1');
             
             // Untuk gambar icon
-            $gambarIcons = ['gambarIcon_1', 'gambarIcon_2', 'gambarIcon_3', 'gambarIcon_4', 'gambarIcon_5'];
+            $gambarIcons = ['gambarIcon_1', 'gambarIcon_2', 'gambarIcon_3', 'gambarIcon_4', 'gambarIcon_5', 'gambarIcon_6', 'gambarIcon_7', 'gambarIcon_8', 'gambarIcon_9'];
             foreach ($gambarIcons as $gambarIcon) {
                 $saveImage($gambarIcon, $gambarIcon);
             }
 
             // Untuk gambar projek
-            $gambarProjek = ['gambarProjek_1', 'gambarProjek_2', 'gambarProjek_3', 'gambarProjek_4', 'gambarProjek_5'];
+            $gambarProjek = ['gambarProjek_1', 'gambarProjek_2', 'gambarProjek_3', 'gambarProjek_4', 'gambarProjek_5', 'gambarProjek_6', 'gambarProjek_7', 'gambarProjek_8', 'gambarProjek_9'];
             foreach ($gambarProjek as $gambar) {
                 $saveImage($gambar, $gambar);
             }
@@ -286,6 +302,7 @@ class ProjectController extends Controller
             $detailProjek->desk_1 = $request->desk_1;
             $detailProjek->desk_2 = $request->desk_2;
             $detailProjek->desk_3 = $request->desk_3;
+            $detailProjek->link_projek = $request->link_projek;
 
             // Simpan perubahan
             if ($detailProjek->save()) {
@@ -334,40 +351,98 @@ class ProjectController extends Controller
     }
 
     public function hapusIcon($id, $index)
-{
-    $projek = projek::find($id);
+    {
+        $projek = projek::find($id);
 
-    // Periksa apakah projek ditemukan
-    if ($projek) {
-        // Pastikan $index hanya angka (1, 2, dll) tanpa tambahan 'gambarIcon_'
-        $gambarKey = 'gambarIcon_' . $index;
+        // Periksa apakah projek ditemukan
+        if ($projek) {
+            // Pastikan $index hanya angka (1, 2, dll) tanpa tambahan 'gambarIcon_'
+            $gambarKey = 'gambarIcon_' . $index;
 
-        // Periksa apakah gambar ada
-        if (!empty($projek->$gambarKey)) {
-            // Hapus gambar dari disk
-            $gambarPath = public_path($projek->$gambarKey);
-            if (file_exists($gambarPath)) {
-                unlink($gambarPath);
+            // Periksa apakah gambar ada
+            if (!empty($projek->$gambarKey)) {
+                // Hapus gambar dari disk
+                $gambarPath = public_path($projek->$gambarKey);
+                if (file_exists($gambarPath)) {
+                    unlink($gambarPath);
+                }
+
+                // Set kolom gambar menjadi null di database
+                $projek->$gambarKey = null;
+                $projek->save();
+
+                // Tambahkan log untuk debugging
+                \Log::info('Gambar ' . $gambarKey . ' telah dihapus', ['projek_id' => $projek->id]);
+            } else {
+                \Log::info('Gambar tidak ditemukan di database', ['projek_id' => $projek->id, 'gambarKey' => $gambarKey]);
             }
-
-            // Set kolom gambar menjadi null di database
-            $projek->$gambarKey = null;
-            $projek->save();
-
-            // Tambahkan log untuk debugging
-            \Log::info('Gambar ' . $gambarKey . ' telah dihapus', ['projek_id' => $projek->id]);
         } else {
-            \Log::info('Gambar tidak ditemukan di database', ['projek_id' => $projek->id, 'gambarKey' => $gambarKey]);
+            \Log::info('Projek tidak ditemukan', ['projek_id' => $id]);
         }
-    } else {
-        \Log::info('Projek tidak ditemukan', ['projek_id' => $id]);
+
+        return redirect()->back()->with('success', 'Gambar berhasil dihapus!');
     }
 
-    return redirect()->back()->with('success', 'Gambar berhasil dihapus!');
-}
 
+    // cv
+    public function storeFileCv(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file', // Validasi file
+        ]);
 
+        try {
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                
+                // Ambil file lama dari database jika ada
+                $existingFile = file::latest()->first(); // Ambil file terbaru dari database, atau sesuaikan dengan logika Anda
 
+                // Jika ada file lama, hapus file tersebut
+                if ($existingFile && file_exists(public_path('files/' . $existingFile->CV_name))) {
+                    unlink(public_path('files/' . $existingFile->CV_name)); // Menghapus file lama
+                    $existingFile->delete(); // Hapus data lama dari database
+                }
+
+                // Simpan file baru ke public/files
+                $path = $file->move(public_path('files'), $filename);
+
+                // Simpan informasi file baru ke database
+                file::create([
+                    'CV_name' => $filename,
+                    'path' => $path
+                ]);
+
+                return redirect()->back()->with('success', 'File berhasil diupload dan file lama telah digantikan!');
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal upload file: ' . $e->getMessage());
+        }
+        
+        return redirect()->back()->with('error', 'Tidak ada file yang dipilih');
+    }
+
+    public function downloadFile($filename)
+    {
+        try {
+            // Tentukan path file di direktori public/files
+            $filePath = public_path('files/' . $filename);
+
+            // Periksa apakah file ada
+            if (file_exists($filePath)) {
+                // Tentukan nama file yang akan digunakan saat diunduh
+                $newFileName = 'CV-Muhammad Risky Farhan.' . pathinfo($filename, PATHINFO_EXTENSION);
+
+                // Kembalikan response untuk mendownload file dengan nama baru
+                return response()->download($filePath, $newFileName);
+            } else {
+                return redirect()->back()->with('error', 'File tidak ditemukan');
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal mendownload file: ' . $e->getMessage());
+        }
+    }
 
 
     // public function tambahGambarProjek(Request $request, $idProjek)

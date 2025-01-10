@@ -29,6 +29,15 @@
             background-color: blue;
             color: white;
         }
+
+        @media (min-width: 768px) {
+            .img-md-200 {
+                width: 200px;
+                height: 200px;
+                object-fit: cover;
+            }
+        }
+
     </style>
 
 

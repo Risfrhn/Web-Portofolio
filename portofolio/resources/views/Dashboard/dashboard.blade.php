@@ -7,7 +7,9 @@
                 <h5>Selamat datang! saya</h5>
                 <h1>Muhammad Risky Farhan</h1>
                 <p class="py-2 opacity-50" style="line-height: 1.8;">Saya seorang mahasiswa jurusan rekayasa perangkat lunak <br>Ayo telusuri pengalaman proyek dan pencapaian saya</p>
-                <button type="button" class="btn btn-outline-primary border-2">Download CV</button>
+                @foreach($files as $file)
+                    <a type="button" class="btn btn-outline-primary border-2" href="{{ route('files.download', ['filename' => $file->CV_name]) }}">Download CV</a>
+                @endforeach    
             </div>
             <div class="col-12 col-md-6 d-flex justify-content-center" data-aos="zoom-in">
                 <img src="{{ asset('Gambar/gambarorang.png') }}"  height="500px" alt="">
@@ -19,7 +21,7 @@
     <div class="p-3 mb-2 bg-body-tertiary" id="halaman-keahlian">
         <div class="container">
             <div class="row py-5">
-                <p class="pb-5" style="font-size:25px" data-aos="fade-right">Keahlian</p>
+                <p class="pb-5 align-self-center text-center text-lg-start" style="font-size:25px" data-aos="fade-right">Keahlian</p>
                 @foreach($keahlian as $item)
                 <div class="col-12 col-md-4 d-flex align-items-center justify-content-center" data-aos="zoom-in">
                     <div class="card border-0 bg-transparent" style="width: 18rem;">
@@ -40,7 +42,7 @@
     <!-- projek -->
     <div class="container" id="halaman-projek">
         <div class="row py-5">
-            <p class="pb-5" style="font-size:25px" data-aos="fade-right">Projek</p>
+            <p class="pb-5 align-self-center text-center text-lg-start" style="font-size:25px" data-aos="fade-right">Projek</p>
             <div id="carouselExampleRide" class="carousel carousel-dark slide pb-2 rounded-5" data-bs-ride="carousel" data-aos="zoom-in">
                 <div class="carousel-inner">
                     @foreach($projek as $key => $item)
@@ -67,7 +69,7 @@
     <div class="p-3 mb-2 bg-body-tertiary" id="halaman-keahlian">
         <div class="container">
             <div class="row py-5">
-                <p class="pb-5" style="font-size:25px" data-aos="fade-right">sertifikat</p>
+                <p class="pb-5 align-self-center text-center text-lg-start" style="font-size:25px" data-aos="fade-right">sertifikat</p>
                 @foreach ($sertifikat as $item)
                     <div class="col-md-4 d-flex align-items-center justify-content-center py-3" data-aos="zoom-in">
                         <div class="card h-100" style="width: 18rem;">
@@ -86,11 +88,12 @@
     <!-- tentang saya -->
     <div class="container" id="halaman-tentangSaya">
         <div class="row py-5">
-            <p class="pb-3" style="font-size:25px" data-aos="fade-right">Tentang saya</p>
-            <div class="col-4 d-flex align-items-center justify-content-center" data-aos="zoom-in">
-                <img class="rounded" src="{{ asset('Gambar/saya_bgdanattribut.JPG') }}" height="200px" alt="">
+            <p class="pb-3 align-self-center text-center text-lg-start" style="font-size:25px" data-aos="fade-right">Tentang saya</p>
+            <div class="col-12 col-md-4 py-5 py-md-0 d-flex justify-content-center" data-aos="zoom-in">
+                <img class="rounded img-fluid img-md-200" src="{{ asset('Gambar/saya_bgdanattribut.jpg') }}" alt="">
             </div>
-            <div class="col-8" data-aos="fade-up">
+
+            <div class="col-12 col-md-8 align-self-center text-center text-md-start" data-aos="fade-up">
                 <p style="font-size:12px; text-align: justify;">Hai, Perkenalkan nama saya <span style="font-size: 14px; font-weight: bold;">Muhammad Risky Farhan.</span> saya seorang mahasiswa yang masih menempuh pendidikan di <span style="font-size: 14px; font-weight: bold; color:red">Universitas Telkom </span>dengan jurusan <span style="font-size: 14px; font-weight: bold; color:orange">Rekayasa Perangkat Lunak.</span> saya memiliki ketertarikan pada sebuah pengembangan <span style="font-size: 14px; font-weight: bold; color:blue">website</span> terutama pada bagian User Interface. Selain itu, saya juga memiliki pengalaman dalam mengoperasikan <span style="font-size: 14px; font-weight: bold;"> microsoft office </span> seperti Powerpoint, Excel, dan Word. saya memiliki pengalaman dalam menggunakan beberapa tools seperti.</p>
                 <img src="{{ asset('Gambar/Bootstrap_logo.png') }}" class="img-fluid pe-4" style="max-width: 100px;" alt="Tidak terbaca">
                 <img src="{{ asset('Gambar/Tailwind_CSS_logo.png') }}" class="img-fluid pe-4" style="max-width: 100px;" alt="Tidak terbaca">

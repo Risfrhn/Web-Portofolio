@@ -6,28 +6,35 @@ use App\Http\Controllers\ProjectController;
 
 
 // route dashboard
-Route::get('/dashboard-admin', [ProjectController::class, 'showDashboard'])->middleware('auth')->name('dashboardAdmin');
-Route::get('/', [ProjectController::class, 'showDashboardPengguna'])->name('dashboardPengguna');
+route::get('/dashboard-admin', [ProjectController::class, 'showDashboard'])->middleware('auth')->name('dashboardAdmin');
+route::get('/', [ProjectController::class, 'showDashboardPengguna'])->name('dashboardPengguna');
+
+// download cv pengguna
+route::get('/dashboard-admin/download/{filename}', [ProjectController::class, 'downloadFile'])->name('files.download');
 
 // route admin
-Route::get('/login', [ProjectController::class, 'showLogin'])->name('login');
-Route::post('/login-berhasil', [ProjectController::class, 'login'])->name('action.login');
-Route::get('/logout', [ProjectController::class, 'logout'])->name('action.logout');
-Route::get('/logged-out', [ProjectController::class, 'showLoggedOutPage'])->name('loggedOutPage');
+route::get('/login', [ProjectController::class, 'showLogin'])->name('login');
+route::post('/login-berhasil', [ProjectController::class, 'login'])->name('action.login');
+route::get('/logout', [ProjectController::class, 'logout'])->name('action.logout');
+route::get('/logged-out', [ProjectController::class, 'showLoggedOutPage'])->name('loggedOutPage');
 
 // --keahlian
-route::post('/keahlian',[ProjectController::class, 'storeKeahlian'])->name('tambahKeahlian');
-Route::delete('/keahlian/{id}', [ProjectController::class, 'destroyKeahlian'])->name('hapusKeahlian');
+route::post('/dashboard-admin/keahlian',[ProjectController::class, 'storeKeahlian'])->name('tambahKeahlian');
+route::delete('/dashboard-admin/keahlian/{id}', [ProjectController::class, 'destroyKeahlian'])->name('hapusKeahlian');
 // --sertifikat
-route::post('/sertifikat',[ProjectController::class, 'storeSertifikat'])->name('tambahSertifikat');
-Route::delete('/sertifikat/{id}', [ProjectController::class, 'destroySertifikat'])->name('hapusSertifikat');
+route::post('/dashboard-admin/sertifikat',[ProjectController::class, 'storeSertifikat'])->name('tambahSertifikat');
+route::delete('/dashboard-admin/sertifikat/{id}', [ProjectController::class, 'destroySertifikat'])->name('hapusSertifikat');
 // --projek
-route::post('/projek',[ProjectController::class, 'storeProjek'])->name('tambahProjek');
-Route::get('/detail/{id}', [ProjectController::class, 'showDetailProjek'])->name('project.detail');
-Route::put('projek/edit/{id}', [ProjectController::class, 'editProjek'])->name('projek.update');
-Route::delete('/projek/{id}', [ProjectController::class, 'destroyProjek'])->name('hapusProjek');
-Route::delete('/projek/{id}/hapus-gambar/{index}', [ProjectController::class, 'hapusGambar'])->name('hapusGambar');
-Route::delete('/projek/{id}/hapus-icon/{index}', [ProjectController::class, 'hapusIcon'])->name('hapusIcon');
+route::post('/dashboard-admin/projek',[ProjectController::class, 'storeProjek'])->name('tambahProjek');
+route::get('/dashboard-admin/detail/{id}', [ProjectController::class, 'showDetailProjek'])->name('project.detail');
+route::put('/dashboard-adminprojek/edit/{id}', [ProjectController::class, 'editProjek'])->name('projek.update');
+route::delete('/dashboard-admin/projek/{id}', [ProjectController::class, 'destroyProjek'])->name('hapusProjek');
+route::delete('/dashboard-admin/projek/{id}/hapus-gambar/{index}', [ProjectController::class, 'hapusGambar'])->name('hapusGambar');
+route::delete('/dashboard-admin/projek/{id}/hapus-icon/{index}', [ProjectController::class, 'hapusIcon'])->name('hapusIcon');
+// --CV
+route::post('/dashboard-admin/storeCv',[ProjectController::class, 'storeFileCv'])->name('files.store');
+
+
 
 
 
