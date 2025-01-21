@@ -6,7 +6,9 @@
                 <h5>Selamat datang! saya</h5>
                 <h1>Muhammad Risky Farhan</h1>
                 <p class="py-2 opacity-50" style="line-height: 1.8;">Saya seorang mahasiswa jurusan rekayasa perangkat lunak <br>Ayo telusuri pengalaman proyek dan pencapaian saya</p>
-                <button type="button" class="btn btn-outline-primary border-2" data-bs-toggle="modal" data-bs-target="#uploadModal">Upload CV</button>
+                @foreach($files as $file)
+                    <button type="button" class="btn btn-outline-primary border-2" href="{{ route('files.download', ['filename' => $file->CV_name]) }}">Download cv</button>
+                @endforeach
             </div>
             <div class="col-12 col-md-6 d-flex justify-content-center" data-aos="zoom-in">
                 <img src="{{ asset('Gambar/gambarorang.png') }}"  height="500px" alt="">
@@ -283,7 +285,7 @@
     </div>
 
     <!-- Modal Upload CV -->
-    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -305,7 +307,7 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> -->
 
 
     <!-- Modal Konfirmasi Hapus -->
@@ -331,6 +333,72 @@
         </div>
     </div>
 
+
+    <!-- Button mengambang -->
+    <button type="button" class="btn btn-primary btn-lg position-fixed bottom-0  end-0 m-5" data-bs-toggle="modal" data-bs-target="#editModal">
+    <i class="bi bi-pencil"></i> <!-- Ikon pensil -->
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit Project</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Pilihan untuk memilih apa yang ingin diedit -->
+                    <form method="POST" action="{{ route('files.update') }}" enctype="multipart/form-data" id="editProjectForm">
+                        @csrf
+                        @method('PUT')
+                        <!-- Pilihan antara Edit Project atau Add Carousel Images -->
+                        <div class="mb-3">
+                            <label class="form-label">Mau ngedit apa nambah gambar min?</label>
+                            <div>
+                                <input type="radio" class="btn-check" name="edit_cv" id="edit_cv" value="cv" autocomplete="off" checked>
+                                <label class="btn btn-outline-primary" for="edit_cv">cv</label>
+                                
+                                <input type="radio" class="btn-check" name="edit_gambarUtama" id="add_gambarUtama" value="carousel" autocomplete="off">
+                                <label class="btn btn-outline-primary" for="add_gambarUtama">gambar utama</label>
+
+                                <input type="radio" class="btn-check" name="edit_gambarTentang" id="add_gambarTentang" value="icon" autocomplete="off">
+                                <label class="btn btn-outline-primary" for="add_gambarTentang">gambar tentang saya</label>
+                            </div>
+                        </div>
+
+                        <!-- Form Edit Project -->
+                        <div id="editCV">
+                            <div class="mb-3">
+                                <label for="file" class="form-label">Upload disini cv barunya bentuk PF atau PNG aja ya</label>
+                                <input type="file" class="form-control" id="file" name="file" required>
+                            </div>
+                        </div>
+
+                        <!-- Form tambah Images -->
+                        <div id="addGambarUtama" style="display:none">
+                            <div class="mb-3">
+                                <label for="fileGambarUtama" class="form-label">Upload disini gambar utama barunya disini</label>
+                                <input type="file" class="form-control" id="fileGambarUtama" name="fileGambarUtama" required>
+                            </div>
+                        </div>
+
+                        <!-- Form tambah Icon -->
+                        <div id="addGambarTentang" style="display:none">
+                            <div class="mb-3">
+                                <label for="fileGambarTentang" class="form-label">Upload disini gambar tentang barunya disini</label>
+                                <input type="file" class="form-control" id="fileGambarTentang" name="fileGambarTentang" required>
+                            </div>
+                        </div>
+
+                        <!-- Tombol Submit -->
+                        <button type="submit" class="btn btn-primary" id="editProjectSubmit">Udah ni updatin dong</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- JS Boostrap -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
@@ -342,6 +410,27 @@
         setTimeout(function() {
             sessionStorage.removeItem('logout');
         }, 1);
+
+
+        document.getElementById('edit_cv').addEventListener('change', function() {
+        document.getElementById('editCV').style.display = 'block';
+        document.getElementById('editGambarUtama').style.display = 'none';
+        document.getElementById('editGambarTentang').style.display = 'none';
+        });
+
+        document.getElementById('add_gambarUtama').addEventListener('change', function() {
+            document.getElementById('editCV').style.display = 'none';
+            document.getElementById('editGambarUtama').style.display = 'block';
+            document.getElementById('editGambarTentang').style.display = 'none';
+        });
+
+        document.getElementById('add_gambarTentang').addEventListener('change', function() {
+            document.getElementById('editCV').style.display = 'none';
+            document.getElementById('editGambarUtama').style.display = 'none';
+            document.getElementById('editGambarTentang').style.display = 'block';
+        });
+
+
 
 
         // Menangani pengaturan ID dan tipe untuk penghapusan

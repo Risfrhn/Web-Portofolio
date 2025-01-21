@@ -32,7 +32,7 @@ route::delete('/dashboard-admin/projek/{id}', [ProjectController::class, 'destro
 route::delete('/dashboard-admin/projek/{id}/hapus-gambar/{index}', [ProjectController::class, 'hapusGambar'])->name('hapusGambar');
 route::delete('/dashboard-admin/projek/{id}/hapus-icon/{index}', [ProjectController::class, 'hapusIcon'])->name('hapusIcon');
 // --CV
-route::post('/dashboard-admin/storeCv',[ProjectController::class, 'storeFileCv'])->name('files.store');
+route::post('/dashboard-admin/storeCv',[ProjectController::class, 'storeFileCv'])->name('files.update');
 
 
 
